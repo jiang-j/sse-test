@@ -22,10 +22,11 @@ public class CompletedListener {
 
     @EventListener
     public void deployEventHandler(CompletedEvent completedEvent) throws IOException {
-        Long recordId = completedEvent.getRecordId();
-        SseEmitter sseEmitter = sseEmitters.get(recordId);
-        sseEmitter.send("回调成功");
-        sseEmitter.complete();
-
+        Long payRecordId = completedEvent.getRecordId();
+        SseEmitter sseEmitter = sseEmitters.get(payRecordId);
+        if (null != sseEmitter){
+            sseEmitter.send("成功");
+            sseEmitter.complete();
+        }
     }
 }

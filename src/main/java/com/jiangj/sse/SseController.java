@@ -6,12 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 /**
  * Created by jiangjian on 2018/7/19.
  */
-@Controller
+@RestController
 public class SseController {
 
     @Autowired
@@ -19,7 +20,7 @@ public class SseController {
     @Autowired
     CompletedListener completedListener;
 
-    @GetMapping("/push")
+    @GetMapping("/queryByRecordId")
     public SseEmitter push(@RequestParam Long recordId){
         final SseEmitter emitter = new SseEmitter();
         try {
@@ -31,9 +32,9 @@ public class SseController {
     }
 
     @GetMapping("/callback")
-    @ResponseBody
-    public String callback(@RequestParam Long recordId){
+    public String payCallback(@RequestParam Long recordId){
         applicationContext.publishEvent(new CompletedEvent(this,recordId));
         return "请到监听处查看消息";
+
     }
 }
