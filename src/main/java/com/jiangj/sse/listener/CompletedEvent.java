@@ -1,7 +1,5 @@
-package com.jiangj.sse;
+package com.jiangj.sse.listener;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 /**
